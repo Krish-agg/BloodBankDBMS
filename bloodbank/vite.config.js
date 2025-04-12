@@ -8,6 +8,16 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     react()],
+
+    server: {
+      proxy: {
+        '*': {
+          target: 'http://localhost:8080/', // your backend URL
+          changeOrigin: true,
+          secure: false
+        }
+      }
+    }
 })
 
 

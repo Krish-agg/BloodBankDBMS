@@ -9,11 +9,11 @@ const Form1 = () => {
 
     async function buttonClick(){
 
-        axios.get(`/localhost:8080/`)
+        axios.get(`http://localhost:8080/form1`)
       .then(function (res) {
         
         console.log(res.data);
-        setOutput(res.data);
+        setOutput(JSON.stringify(res.data));
       })
       .catch(function (error) {
         
@@ -37,7 +37,7 @@ const Form1 = () => {
           <h1>No Output Yet!!</h1>
           </div>:
           <div>
-          <h1>{output}</h1>
+          <h5>{output}</h5>
           </div>
         }
         </>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import  Form  from 'react-bootstrap/Form';
+import axios from 'axios';
 
 const Form9 = () => {
     const [output, setOutput] = useState(null);
@@ -20,7 +21,7 @@ const Form9 = () => {
         e.preventDefault();
     
         try {
-          const res = await axios.post('http://localhost:5000/api/update-user', formData);
+          const res = await axios.post('http://localhost:8080/form9', formData);
             setOutput(res.data);
           console.log('Update successful:', res.data);
         } catch (error) {
@@ -34,7 +35,7 @@ const Form9 = () => {
         <Form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            name="bloodtype"
+            name="bloodType"
             placeholder="BloodType"
             value={formData.bloodType}
             onChange={handleChange}
