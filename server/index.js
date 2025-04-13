@@ -14,7 +14,7 @@ app.use(cors());
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'bloodbankdb',
+    database: 'deadline2',
     password:process.env.SQL_PASSWORD,
 });
 
@@ -237,7 +237,6 @@ VALUES ( "${firstname}", "${lastname}", "${role}", ${bankid});`
 });
 
 app.post("/form11",(req,res)=>{
-    console.log("Inside form2");
     let {id}=req.body;
     
     
@@ -247,10 +246,8 @@ WHERE Request_ID = ${id};`
     try{
         connection.query(q,(err,result)=>{
             if(err) throw err;
-            //let count=result[0]["count(*)"];
             res.send(result);
             console.log(result);
-            //res.render("home.ejs",{count});
         });
     }
     catch(err){
@@ -259,6 +256,94 @@ WHERE Request_ID = ${id};`
     }
 });
 
+app.get("/form12/:bloodgroup",(req,res)=>{
+    let {bloodgroup}=req.params;
+    console.log(req);
+    let q=`SELECT DISTINCT bb.* FROM BloodBank bb
+JOIN BloodSample bs ON bb.Bank_ID = bs.Bank_ID
+WHERE bs.Blood_Type = "${bloodgroup}";`;
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            res.send(result);
+            console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+
+app.get("/form13",(req,res)=>{
+    let q="SELECT * FROM Request WHERE Request_Date>=CURRENT_DATE() ORDER BY Request_Date;";
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            res.send(result);
+            console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form14",(req,res)=>{
+    let q="SELECT Bank_ID, Blood_Type, SUM(Quantity_Required) AS total_requested FROM Request GROUP BY Bank_ID, Blood_Type;";
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            res.send(result);
+            console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form20/:staffid",(req,res)=>{
+    let {staffid}=req.params;
+    console.log(req);
+    let q= `SELECT * FROM BloodSample WHERE Staff_ID = ${staffid};`
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            res.send(result);
+            console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form19/:donorid",(req,res)=>{
+    let {donorid}=req.params;
+    console.log(req);
+    let q= `SELECT * FROM Donation WHERE Donor_ID = ${donorid};`
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            res.send(result);
+            console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
 
 
 app.listen("8080",()=>{

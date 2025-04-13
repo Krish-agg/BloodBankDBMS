@@ -1,4 +1,4 @@
-/bloodbank/node_modules/
+/bloodbank/node_modules
 /server/node_modules
 /server/.env
 /.env
