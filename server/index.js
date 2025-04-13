@@ -64,6 +64,87 @@ app.get("/form2/:noofmonths",(req,res)=>{
     }
 });
 
+app.get("/form3",(req,res)=>{
+    let q="SELECT Blood_Type, SUM(Quantity) AS units_available FROM BloodSample GROUP BY Blood_Type";
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            
+            res.send(result);
+            console.log(result);
+            
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form4/:bloodType",(req,res)=>{
+   
+    let {bloodType}=req.params;
+ 
+    let q=`SELECT * FROM Donor WHERE Blood_Type = '${bloodType}'`;
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            //let count=result[0]["count(*)"];
+            res.send(result);
+            console.log(result);
+            //res.render("home.ejs",{count});
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form5/:noofyears",(req,res)=>{
+   
+    let {noofyears}=req.params;
+
+    let q=`SELECT * FROM Request WHERE Request_Date >= DATE_SUB(CURDATE(), INTERVAL ${noofyears} YEAR)`;
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            //let count=result[0]["count(*)"];
+            res.send(result);
+            console.log(result);
+            //res.render("home.ejs",{count});
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.get("/form6/:noofTimes",(req,res)=>{
+   
+    let {noofTimes}=req.params;
+
+    let q=`SELECT Donor_ID, COUNT(*) AS donation_count FROM Donation GROUP BY Donor_ID HAVING donation_count >= ${noofTimes}`;
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            //let count=result[0]["count(*)"];
+            res.send(result);
+            console.log(result);
+            //res.render("home.ejs",{count});
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
 app.post("/form7",(req,res)=>{
     console.log("Inside form2");
     let {id,role}=req.body;

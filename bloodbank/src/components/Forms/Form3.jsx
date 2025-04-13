@@ -3,16 +3,17 @@ import Button from 'react-bootstrap/Button';
 
 import React from 'react'
 import { useState } from 'react';
+import axios from 'axios';
 
 const Form3 = () => {
 
     async function buttonClick(){
 
-        axios.get(`/localhost:3000/form3`)
+        axios.get(`http://localhost:8080/form3`)
       .then(function (res) {
         
         console.log(res);
-        setOutput(res.data);
+        setOutput(JSON.stringify(res.data));
       })
       .catch(function (error) {
         
@@ -36,7 +37,7 @@ const Form3 = () => {
           <h1>No Output Yet!!</h1>
           </div>:
           <div>
-          <h1>Output</h1>
+          <h5>{output}</h5>
           </div>
         }
         </>

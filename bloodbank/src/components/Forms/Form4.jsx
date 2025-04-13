@@ -3,16 +3,17 @@ import Form from 'react-bootstrap/Form';
 
 import React from 'react'
 import { useState } from 'react';
+import axios from 'axios';
 
 const Form4 = () => {
 
-    async function buttonClick(){
-      
-      axios.get(`/localhost:3000/form4/${bloodGroup}`)
+    async function buttonClick(e){
+      e.preventDefault();
+      axios.get(`http://localhost:8080/form4/${bloodGroup}`)
       .then(function (res) {
         
         console.log(res);
-        setOutput(res.data);
+        setOutput(JSON.stringify(res.data));
       })
       .catch(function (error) {
         
@@ -46,7 +47,7 @@ const Form4 = () => {
           <h1>No Output Yet!!</h1>
           </div>:
           <div>
-          <h1>Output</h1>
+          <h5>{output}</h5>
           </div>
         }
         </>
