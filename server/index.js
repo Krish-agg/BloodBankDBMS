@@ -14,7 +14,7 @@ app.use(cors());
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'bloodbankdb',
+    database: process.env.DATABASE_NAME,
     password:process.env.SQL_PASSWORD,
 });
 
@@ -278,7 +278,7 @@ WHERE bs.Blood_Type = "${bloodgroup}";`;
 
 
 app.get("/form13",(req,res)=>{
-    let q="SELECT * FROM Request WHERE Request_Date>=CURRENT_DATE() ORDER BY Request_Date;";
+    let q="SELECT * FROM Request ORDER BY Request_Date;";
 
     try{
         connection.query(q,(err,result)=>{
