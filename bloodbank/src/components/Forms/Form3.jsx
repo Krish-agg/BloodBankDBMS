@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import DataTable from './DataTable';
 
 const Form3 = () => {
 
@@ -13,7 +14,7 @@ const Form3 = () => {
       .then(function (res) {
         
         console.log(res);
-        setOutput(JSON.stringify(res.data));
+        setOutput((res.data));
       })
       .catch(function (error) {
         
@@ -33,13 +34,7 @@ const Form3 = () => {
             Submit
           </Button>
         
-        {(output==null)?<div>
-          <h1>No Output Yet!!</h1>
-          </div>:
-          <div>
-          <h5>{output}</h5>
-          </div>
-        }
+          <DataTable data={output} title={"Blood Stock Details"} />
         </>
       );
 }

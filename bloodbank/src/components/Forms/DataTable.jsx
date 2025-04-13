@@ -2,8 +2,9 @@ import Table from 'react-bootstrap/Table';
 import React from 'react';
 
 const DataTable = ({ data, title }) => {
+  
   if (!Array.isArray(data) || data.length === 0) {
-    return <h5>No data to display</h5>;
+    return <h3>No Data To Display !</h3>;
   }
 
   const headers = Object.keys(data[0]);
