@@ -3,16 +3,20 @@ import Form from 'react-bootstrap/Form';
 
 import React from 'react'
 import { useState } from 'react';
+import axios from 'axios';
+import DataTable from "./DataTable";
 
 const Form13 = () => {
 
-    async function buttonClick(){
+    async function buttonClick(e){
+
+      e.preventDefault();
       
-      axios.get(`/localhost:3000/form13/`)
+      axios.get(`http://localhost:8080/form13/`)
       .then(function (res) {
         
         console.log(res);
-        setOutput(true);
+        setOutput(res.data);
       })
       .catch(function (error) {
         
@@ -21,7 +25,7 @@ const Form13 = () => {
       
     }
 
-    const [output, setOutput] = useState(false);
+    const [output, setOutput] = useState([]);
 
     return (
       <>
@@ -32,13 +36,7 @@ const Form13 = () => {
             Submit
           </Button>
         </Form>
-        {(output ==null)?<div>
-          <h1>No Output Yet!!</h1>
-          </div>:
-          <div>
-          <h1>Output</h1>
-          </div>
-        }
+        <DataTable data={output} title="Pending Requests" />
         </>
       );
 }

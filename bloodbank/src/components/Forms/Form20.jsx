@@ -3,12 +3,16 @@ import Form from 'react-bootstrap/Form';
 
 import React from 'react'
 import { useState } from 'react';
+import DataTable from './DataTable';
+import axios from 'axios';
 
 const Form20 = () => {
 
-    async function buttonClick(){
+    async function buttonClick(e){
+
+      e.preventDefault();
       
-      axios.get(`/localhost:3000/form20/${bloodGroup}`)
+      axios.get(`http://localhost:8080/form20/${staffid}`)
       .then(function (res) {
         
         console.log(res);
@@ -22,7 +26,7 @@ const Form20 = () => {
     }
 
     const [output, setOutput] = useState(null);
-    const [bloodGroup, setBloodGroup] = useState("");
+    const [staffid, setStaffid] = useState([]);
 
     return (
       <>
@@ -31,7 +35,7 @@ const Form20 = () => {
           <Form.Group className="mb-3">
             <Form.Label>Staff Member ID</Form.Label>
             <Form.Control type="text" placeholder="Enter Staff ID" onChange={(event)=>{
-              setBloodGroup(event.target.value);
+              setStaffid(event.target.value);
             }}/>
      
           </Form.Group>
@@ -40,13 +44,7 @@ const Form20 = () => {
             Submit
           </Button>
         </Form>
-        {(output ==null)?<div>
-          <h1>No Output Yet!!</h1>
-          </div>:
-          <div>
-          <h1>Output</h1>
-          </div>
-        }
+        <DataTable data={output} title="Blood Donation Details" />
         </>
       );
 }
