@@ -19,6 +19,8 @@ import Form8 from "./components/Forms/Form8";
 import Form9 from "./components/Forms/Form9";
 import Form10 from "./components/Forms/Form10";
 import Form11 from "./components/Forms/Form11";
+import Form21 from "./components/Forms/Form21";
+import Form22 from "./components/Forms/Form22";
 
 
 
@@ -45,6 +47,8 @@ function App() {
           <Route path="/14" element={<Form14 />} />
           <Route path="/15" element={<Form19 />} />
           <Route path="/16" element={<Form20 />} />
+          <Route path="/17" element={<Form21 />} />
+          <Route path="/18" element={<Form22 />} />
           
         </Route>
       </Routes>

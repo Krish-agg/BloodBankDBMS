@@ -3,13 +3,15 @@ import { useState } from 'react';
 import  Form  from 'react-bootstrap/Form';
 import axios from 'axios';
 
-const Form10 = () => {
+const Form9 = () => {
     const [output, setOutput] = useState(null);
     const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        role:'',
-        bankid: ''
+        firstName: '',
+        lastName: '',
+        age: '',
+        gender: '',
+        dob: ''
+
       });
     
       const handleChange = (e) => {
@@ -23,7 +25,7 @@ const Form10 = () => {
         e.preventDefault();
     
         try {
-          const res = await axios.post('http://localhost:8080/form10', formData);
+          const res = await axios.post('http://localhost:8080/form17', formData);
             setOutput(res.data);
           console.log('Update successful:', res.data);
         } catch (error) {
@@ -33,38 +35,47 @@ const Form10 = () => {
     
       return (
         <>
-        <h3>Insert new Staff member .</h3>
+        <h3>Register a New Recipient</h3>
         <Form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            name="firstname"
-            placeholder="FirstName"
-            value={formData.firstname}
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
             onChange={handleChange}
             className="border p-2 mb-4 w-full"
             required
           />
           <input
             type="text"
-            name="lastname"
-            placeholder="LastName"
-            value={formData.lastname}
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
             onChange={handleChange}
             className="border p-2 mb-4 w-full"
           />
           <input
             type="text"
-            name="role"
-            placeholder="Role"
-            value={formData.role}
+            name="age"
+            placeholder="Age"
+            value={formData.age}
             onChange={handleChange}
             className="border p-2 mb-4 w-full"
           />
           <input
             type="text"
-            name="bankid"
-            placeholder="Bank ID"
-            value={formData.bankid}
+            name="gender"
+            placeholder="Gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="border p-2 mb-4 w-full"
+          />
+
+          <input
+            type="date"
+            name="dob"
+            placeholder="Date of Birth"
+            value={formData.dob}
             onChange={handleChange}
             className="border p-2 mb-4 w-full"
           />
@@ -73,7 +84,7 @@ const Form10 = () => {
           </button>
         </Form>
         {(output ==null)?<div>
-          <h3>No Output Yet!!</h3>
+          <h1>No Output Yet!!</h1>
           </div>:
           <div>
           <h1>Request Inserted Successfully!</h1>
@@ -83,4 +94,4 @@ const Form10 = () => {
       );
 }
 
-export default Form10
+export default Form9

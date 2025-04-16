@@ -55,7 +55,7 @@ const Form7 = () => {
           </button>
         </Form>
         {(output ==null)?<div>
-          <h1>No Output Yet!!</h1>
+          <h3>No Output Yet!!</h3>
           </div>:
           <div>
           <h1>Staff Updated Successfully!</h1>

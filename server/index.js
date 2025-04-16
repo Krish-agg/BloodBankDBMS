@@ -192,11 +192,33 @@ app.post("/form8",(req,res)=>{
 
 app.post("/form9",(req,res)=>{
     console.log("Inside form2");
-    let {bloodType, quantity}=req.body;
+    let {bloodType, quantity, bankid}=req.body;
     
     
     let q=`INSERT INTO Request (Recipient_ID, Bank_ID, Blood_Type, Quantity_Required, Request_Date)
-VALUES (3, 5, "${bloodType}", ${quantity}, CURRENT_DATE());`
+VALUES (3, ${bankid}, "${bloodType}", ${quantity}, CURRENT_DATE());`
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            //let count=result[0]["count(*)"];
+            res.send(result);
+            console.log(result);
+            //res.render("home.ejs",{count});
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.post("/form18",(req,res)=>{
+    let {firstName, lastName, age, gender, dob, bloodtype, address, contact}=req.body;
+    
+    
+    let q=`INSERT INTO Donor (First_Name, Last_Name, DOB, Age, Contact, Blood_Type, Gender, Address, Last_Donation_Date, Eligibility)
+VALUES ("${firstName}", "${lastName}", "${dob}", ${age}, "${contact}", "${bloodtype}", "${gender}","${address}", CURRENT_DATE(), true);`
 
     try{
         connection.query(q,(err,result)=>{
@@ -337,6 +359,28 @@ app.get("/form19/:donorid",(req,res)=>{
             if(err) throw err;
             res.send(result);
             console.log(result);
+        });
+    }
+    catch(err){
+        res.send("Some error with database");
+        console.log(err);
+    }
+});
+
+app.post("/form17",(req,res)=>{
+    let {firstName, lastName, age, gender, dob}=req.body;
+    
+    
+    let q=`INSERT INTO Recipient (First_Name, Last_Name, DOB, Age, Gender)
+VALUES ("${firstName}", "${lastName}", "${dob}", ${age}, "${gender}");`
+
+    try{
+        connection.query(q,(err,result)=>{
+            if(err) throw err;
+            //let count=result[0]["count(*)"];
+            res.send(result);
+            console.log(result);
+            //res.render("home.ejs",{count});
         });
     }
     catch(err){
